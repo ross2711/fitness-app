@@ -10,12 +10,10 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatListModule,
-<<<<<<< HEAD
   MatTabsModule,
-  MatCardModule
-=======
-  MatTabsModule
->>>>>>> 4407313fdaba3607c87d50e9890e5fcf942453a3
+  MatCardModule,
+  MatSelectModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 @NgModule({
@@ -31,8 +29,9 @@ import {
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
-    MatCardModule
-
+    MatCardModule,
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -46,7 +45,9 @@ import {
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatSelectModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule {}
