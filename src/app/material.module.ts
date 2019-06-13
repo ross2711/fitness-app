@@ -10,8 +10,12 @@ import {
   MatSidenavModule,
   MatToolbarModule,
   MatListModule,
+<<<<<<< HEAD
   MatTabsModule,
   MatCardModule
+=======
+  MatTabsModule
+>>>>>>> 4407313fdaba3607c87d50e9890e5fcf942453a3
 } from '@angular/material';
 
 @NgModule({
@@ -28,6 +32,7 @@ import {
     MatListModule,
     MatTabsModule,
     MatCardModule
+
   ],
   exports: [
     MatButtonModule,
