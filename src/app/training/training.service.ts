@@ -21,10 +21,14 @@ export class TrainingService {
 
     startExercise(selectedId: string) {
         const selectedExercise = this.availableExercises.find(
-            ex => ex.id === selectedId
+            exercise => exercise.id === selectedId
         );
         this.runningExercise = selectedExercise;
 
         this.exerciseChanged.next({ ...this.runningExercise })
     };
+
+    getRunningExercise() {
+        return { ...this.runningExercise }
+    }
 }
