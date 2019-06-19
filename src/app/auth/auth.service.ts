@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { resource } from 'selenium-webdriver/http';
+import { TrainingService } from '../training/training.service';
 
 @Injectable()
 // This service allows us to fake a user login, inform other parts of the app about the login
@@ -14,7 +14,12 @@ export class AuthService {
     private isAuthenticated = false;
     private user: User;
 
-    constructor(private router: Router, private afauth: AngularFireAuth, private snackbar: MatSnackBar) { }
+    constructor(
+        private router: Router,
+        private afauth: AngularFireAuth,
+        private trainingService: TrainingService,
+        snackbar: MatSnackBar
+    ) { }
 
     registerUser(authData: AuthData) {
         this.afauth.auth
@@ -50,6 +55,8 @@ export class AuthService {
         // };
     }
     logout() {
+        this.trainingService.cancelSubscriptions()
+        this.afauth.auth.signOut()
         this.authChange.next(false);
         this.router.navigate(['/login'])
         this.isAuthenticated = false
@@ -58,6 +65,7 @@ export class AuthService {
     isAuth() {
         return this.isAuthenticated
     }
+
     private isAuthSuccessfully() {
         this.isAuthenticated = true;
         this.authChange.next(true);

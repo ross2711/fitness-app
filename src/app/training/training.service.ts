@@ -2,6 +2,7 @@ import { Subject } from 'rxjs/Subject';
 import { Exercise } from './exercise.model';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Subscription } from 'rxjs';
 
 @Injectable()
 export class TrainingService {
@@ -11,12 +12,13 @@ export class TrainingService {
     finishedExercisesChanged = new Subject<Exercise[]>();
     private availableExercises: Exercise[] = [];
     private runningExercise: Exercise;
+    private fbSubs: Subscription[] = [];
 
     constructor(private db: AngularFirestore) { }
 
     // Changed to private method 'private availableExercises'. added a helper method below to access it
     fetchAvailableExercises() {
-        this.db
+        this.fbSubs.push(this.db
             .collection('availableExercises')
             .snapshotChanges()
             .map(docArray => {
@@ -34,7 +36,12 @@ export class TrainingService {
                 this.availableExercises = exercises;
                 // emit next - emitting an array with all the available exercises. New array with a spread operator to create a copy so we dont pass the original array for mutability reasons
                 this.exercisesChanged.next([...this.availableExercises])
-            });
+            }
+                // // Error Handler
+                // error => {
+                //     // console.log(error)
+                // }
+            ));
     };
 
     startExercise(selectedId: string) {
@@ -76,12 +83,21 @@ export class TrainingService {
     }
 
     fetchCompletedOrCancelledExercises() {
-        this.db
+        this.fbSubs.push(this.db
             .collection('finishedExercises')
             .valueChanges()
             .subscribe((exercises: Exercise[]) => {
                 this.finishedExercisesChanged.next(exercises);
-            });
+            }
+                // // Error Handler
+                // error => {
+                //     // console.log(error)
+                // }
+            ));
+    }
+
+    cancelSubscriptions() {
+        this.fbSubs.forEach(sub => sub.unsubscribe())
     }
 
     private addDataToDatabase(exercise: Exercise) {
