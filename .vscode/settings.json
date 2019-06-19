@@ -72,7 +72,7 @@
   "material-icon-theme.folders.color": "#26a69a",
   "files.autoSave": "off",
   "prettier.singleQuote": true,
-  "prettier.printWidth": 100,
+  "prettier.printWidth": 80,
   "editor.autoIndent": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": false
