@@ -8,9 +8,9 @@ export class TrainingService {
     // new Subject which will eventually hold a payload of type 'Exercise'.
     exerciseChanged = new Subject<Exercise>();
     exercisesChanged = new Subject<Exercise[]>();
+    finishedExercisesChanged = new Subject<Exercise[]>();
     private availableExercises: Exercise[] = [];
     private runningExercise: Exercise;
-    private exercises: Exercise[] = [];
 
     constructor(private db: AngularFirestore) { }
 
@@ -71,8 +71,14 @@ export class TrainingService {
     getRunningExercise() {
         return { ...this.runningExercise }
     }
-    getCompletedOrCancelledExercises() {
-        return this.exercises.slice()
+
+    fetchCompletedOrCancelledExercises() {
+        this.db
+            .collection('finishedExercises')
+            .valueChanges()
+            .subscribe((exercises: Exercise[]) => {
+                this.finishedExercisesChanged.next(exercises);
+            });
     }
 
     private addDataToDatabase(exercise: Exercise) {

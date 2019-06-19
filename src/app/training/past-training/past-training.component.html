@@ -8,7 +8,7 @@
   <!-- date of the exercise -->
   <ng-container matColumnDef="date">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{element.date | date}}</mat-cell>
+    <mat-cell *matCellDef="let element">{{element.date.toDate() | date}}</mat-cell>
   </ng-container>
   <!-- name of the exercise -->
   <ng-container matColumnDef="name">
