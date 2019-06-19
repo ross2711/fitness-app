@@ -13,8 +13,12 @@
         placeholder="Your email"
         formControlName="email"
       />
-      <mat-hint>Please enter a valid email.</mat-hint>
-      <mat-error>Invalid or missing email.</mat-error>
+      <mat-hint>
+        Please enter a valid email.
+      </mat-hint>
+      <mat-error>
+        Invalid or missing email.
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input
@@ -23,15 +27,19 @@
         placeholder="Your password"
         formControlName="password"
       />
-      <mat-hint>Please enter your password.</mat-hint>
-      <mat-error>Missing password.</mat-error>
+      <mat-hint>
+        Please enter your password.
+      </mat-hint>
+      <mat-error>
+        Missing password.
+      </mat-error>
     </mat-form-field>
     <button
+      *ngIf="!isLoading"
       type="submit"
       mat-raised-button
       color="primary"
       [disabled]="loginForm.invalid"
-      *ngIf="!isLoading"
     >
       Submit
     </button>

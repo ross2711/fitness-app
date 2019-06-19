@@ -16,61 +16,48 @@ export class AuthService {
     private router: Router,
     private afAuth: AngularFireAuth,
     private trainingService: TrainingService,
-    private uiServce: UIService
+    private uiService: UIService
   ) {}
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        // if we are swithcing to authenticated...
-        // set authenticated = true
         this.isAuthenticated = true;
-        // we will emit an event
         this.authChange.next(true);
-        // we will redirect to training
         this.router.navigate(['/training']);
       } else {
-        // else we will cancel subscriptions
         this.trainingService.cancelSubscriptions();
-        // we will emit an event
         this.authChange.next(false);
-        // we will redirect to the login screen
         this.router.navigate(['/login']);
-        // set authenticated = false
         this.isAuthenticated = false;
       }
     });
   }
 
   registerUser(authData: AuthData) {
-    this.uiServce.loadingStateChanged.next(true);
+    this.uiService.loadingStateChanged.next(true);
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
-        this.uiServce.loadingStateChanged.next(false);
+        this.uiService.loadingStateChanged.next(false);
       })
       .catch(error => {
-        this.uiServce.loadingStateChanged.next(false);
-        this.uiServce.showSnackbar(error.message, null, 3000);
+        this.uiService.loadingStateChanged.next(false);
+        this.uiService.showSnackbar(error.message, null, 3000);
       });
   }
 
   login(authData: AuthData) {
-    this.uiServce.loadingStateChanged.next(true);
+    this.uiService.loadingStateChanged.next(true);
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
-        this.uiServce.loadingStateChanged.next(false);
+        this.uiService.loadingStateChanged.next(false);
       })
       .catch(error => {
-        this.uiServce.loadingStateChanged.next(false);
-        this.uiServce.showSnackbar(error.message, null, 3000);
+        this.uiService.loadingStateChanged.next(false);
+        this.uiService.showSnackbar(error.message, null, 3000);
       });
-    // this.user = {
-    //     email: authData.email,
-    //     // fake random userId until the server is implemented
-    //     userId: Math.round(Math.random() * 10000).toString()
-    // };
   }
 
   logout() {

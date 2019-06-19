@@ -18,11 +18,9 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private uiService: UIService) {}
 
   ngOnInit() {
-    this.loadingSubs = this.uiService.loadingStateChanged.subscribe(
-      isLoading => {
-        this.isLoading = isLoading;
-      }
-    );
+    this.loadingSubs = this.uiService.loadingStateChanged.subscribe(isLoading => {
+      this.isLoading = isLoading;
+    });
     this.maxDate = new Date();
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18);
   }
@@ -33,7 +31,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       password: form.value.password
     });
   }
-  // to prevent memory leaks from the loading subscription
+
   ngOnDestroy() {
     this.loadingSubs.unsubscribe();
   }
