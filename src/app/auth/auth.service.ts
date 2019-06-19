@@ -11,8 +11,11 @@ import { resource } from 'selenium-webdriver/http';
 // This service allows us to fake a user login, inform other parts of the app about the login
 export class AuthService {
     authChange = new Subject<boolean>();
+    private isAuthenticated = false;
     private user: User;
+
     constructor(private router: Router, private afauth: AngularFireAuth, private snackbar: MatSnackBar) { }
+
     registerUser(authData: AuthData) {
         this.afauth.auth
             .createUserWithEmailAndPassword(
@@ -47,20 +50,16 @@ export class AuthService {
         // };
     }
     logout() {
-        this.user = null;
         this.authChange.next(false);
         this.router.navigate(['/login'])
-    }
-
-    getUser() {
-        // breaks the reference and returns a brand new user that has the same properties but it will be a different object
-        return { ...this.user };
+        this.isAuthenticated = false
     }
 
     isAuth() {
-        return this.user != null;
+        return this.isAuthenticated
     }
     private isAuthSuccessfully() {
+        this.isAuthenticated = true;
         this.authChange.next(true);
         this.router.navigate(['/training'])
     }
