@@ -18,7 +18,6 @@ import { TrainingService } from './training/training.service';
 import { environment } from '../environments/environment';
 import { UIService } from './shared/ui.service';
 import { AuthModule } from './auth/auth.module';
-import { TrainingModule } from './training/training.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +37,7 @@ import { TrainingModule } from './training/training.module';
     AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AuthModule,
-    TrainingModule
+    AngularFireModule
   ],
   providers: [AuthService, TrainingService, UIService],
   bootstrap: [AppComponent]
