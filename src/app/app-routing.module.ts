@@ -5,8 +5,13 @@ import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
-  { path: 'training', loadChildren: './training/training.module#TrainingModule' }
+  {
+    path: 'training',
+    loadChildren: './training/training.module#TrainingModule',
+    canLoad: [AuthGuard]
+  }
 ];
+// canLoad runs before the bundle is loaded
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
